@@ -1,0 +1,1 @@
+python CarsSite/manage.py runserver
