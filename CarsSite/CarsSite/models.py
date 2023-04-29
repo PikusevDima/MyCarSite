@@ -13,7 +13,7 @@ class Brand(models.Model):
     name = models.CharField(max_length=20,
                             null=False,
                             unique=True)
-    CarManufacturer = models.CharField(primary_key=True)
+    CarManufacturer = models.CharField(max_length=31)
 
 
 class Car(models.Model):
@@ -22,13 +22,12 @@ class Car(models.Model):
     Cost = models.TextField(null=False)
     Speed = models.TextField(null=False)
     BrandId = models.ForeignKey(Brand,
-                                on_delete=models.SET_NULL,
-                                null=False
-                                )
+                                null=True,
+                                on_delete=models.SET_NULL)
 
 
 class Rate(models.Model):
     id = models.AutoField(primary_key=True)
     Person = models.ForeignKey(Person, on_delete=models.CASCADE)
     Car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    Stars = models.CharField(null=True)
+    Stars = models.CharField(max_length=3, null=True)
