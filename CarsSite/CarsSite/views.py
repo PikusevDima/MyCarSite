@@ -8,10 +8,8 @@ def homePage(request):
 def index(request):
     return render(request, 'index.html')
 
-
-def index(request):
-    return render(request, 'index.html')
-
+def person_list(request):
+    return render(request, 'Person_list.html')
 
 def product_new(request, name="pomidor"):
     try:
