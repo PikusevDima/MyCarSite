@@ -1,5 +1,5 @@
 from django import forms
 
 
-class ProductName(forms.Form):
-    product_name = forms.CharField(label="Product name", max_length=20)
+class PersonName(forms.Form):
+    person_name = forms.CharField(label="Person name", max_length=20)
