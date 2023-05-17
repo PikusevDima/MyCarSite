@@ -1,9 +1,10 @@
 
 from django.urls import path
-from . import views
+from .views import views
+from .views import person_view
 
 urlpatterns = [
     path('', views.index),
-    path('new/<name>', views.person_new),
-    path('people', views.person_list),
+    path('user/new/<name>', person_view.add_user),
+    path('user', person_view.user_list),
 ]
