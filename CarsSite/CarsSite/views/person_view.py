@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 
-from CarsSite.CarsSite.forms import UserName
-from CarsSite.CarsSite.models import Person
+from CarsSite.forms import UserName
+from CarsSite.models import Person
 
 
-def edit_person(request, id):
+def edit_user(request, id):
     person = Person.id.get(id=id)
     if request.method == "POST":
         form = UserName(request.POST)
@@ -29,7 +29,7 @@ def edit_person(request, id):
 
 
 def user_list(request):
-    out = Person..all()
+    out = Person.objects.all()
     person = []
 
     for person in out:
@@ -38,7 +38,7 @@ def user_list(request):
             person.name
         ))
 
-    return render(request, "personList.html", {'users': person})
+    return render(request, "Person_List.html", {'users': person})
 
 
 def delete_person(request, id):
@@ -53,15 +53,15 @@ def add_user(request):
             form = UserName(request.POST)
             if form.is_valid():
                 name = form['product_name'].value()
-                product = Person(name=name)
-                product.save()
+                Person = Person(name=name)
+                Person.save()
                 return redirect("/")
         except Exception as e:
             form = UserName(request.POST)
-            return render(request, "addProduct.html", {
+            return render(request, "AddUser.html", {
                 'form': form,
                 'error_message': "такое имя занято"
             })
     else:
         form = UserName()
-        return render(request, "addProduct.html", {'form': form})
+        return render(request, "AddUser.html", {'form': form})
