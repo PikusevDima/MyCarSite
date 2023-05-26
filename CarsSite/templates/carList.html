@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <ul class="list-group">
+        {% for id, brand, users in car %}
+        <li class="list-group-item d-flex justify-content-between">
+            <span><b>{{ id }}</b>. Марка {{ brand. }}</span>
+            <span><b>Имя пользователя:</b> {{ users.name }}</span>
+            <ul class="list-group">
+                {% for id, name in users %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span><b>{{ id }}</b>.  {{ name }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

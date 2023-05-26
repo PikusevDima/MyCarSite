@@ -1,24 +1,53 @@
 from django.shortcuts import render, redirect
 
-from CarsSite.models import Car
+from ..forms import CarNew
+from ..models import Car, Person, Brand
 
 
-
-def add_car(request):
+def new_car(request):
     if request.method == "POST":
         try:
-            form = CarName(request.POST)
+            form = CarNew(request.POST)
             if form.is_valid():
-                name = form['product_name'].value()
-                product = Person(name=name)
-                product.save()
-                return redirect("/")
+                brand_id = form["users"].value()
+                users = form["users"].value()
+
+                car = Car(brand=Brand.objects.get(id=brand_id))
+
+                car.save()
+                for user_id in users:
+                    user = Person.objects.get(id=user_id)
+                    if user is not None:
+                        car.users.add(user)
+
+                return redirect("/car")
         except Exception as e:
-            form = UserName(request.POST)
-            return render(request, "addProduct.html", {
+            form = CarNew(request.POST)
+            return render(request, "addCar.html", {
                 'form': form,
-                'error_message': "такое имя занято"
+                'error_message': e
             })
     else:
-        form = UserName()
-        return render(request, "addProduct.html", {'form': form})
+        form = CarNew()
+        return render(request, "addCar.html", {'form': form})
+
+
+def list_car(request):
+    out = Car.objects.all()
+    car = []
+
+    for car in out:
+        users = []
+        for user in car.users.all():
+            users.append(
+                (user.id,
+                 user.name)
+            )
+
+        car.append((
+            car.id,
+            car.customer,
+            users
+        ))
+
+    return render(request, "carList.html", {'car': car})

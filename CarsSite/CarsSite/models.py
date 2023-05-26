@@ -7,27 +7,31 @@ class Person(models.Model):
                             null=False,
                             unique=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Brand(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20,
                             null=False,
                             unique=True)
-    CarManufacturer = models.CharField(max_length=31)
+    carManufacturer = models.CharField(max_length=31)
+
+    def __str__(self):
+        return self.name
 
 
 class Car(models.Model):
     id = models.AutoField(primary_key=True)
-    Name = models.TextField(null=False)
-    Cost = models.TextField(null=False)
-    Speed = models.TextField(null=False)
-    BrandId = models.ForeignKey(Brand,
-                                null=True,
-                                on_delete=models.SET_NULL)
+    name = models.TextField(null=False)
+    cost = models.TextField(null=False)
+    speed = models.TextField(null=False)
+    brand_id = models.ForeignKey(Brand,
+                              null=True,
+                              on_delete=models.SET_NULL)
+    users = models.ManyToManyField(Person, symmetrical=True)
+    image = models.TextField(null=False)
 
-
-class Rate(models.Model):
-    id = models.AutoField(primary_key=True)
-    Person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    Car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    Stars = models.CharField(max_length=3, null=True)
+    def __str__(self):
+        return self.name

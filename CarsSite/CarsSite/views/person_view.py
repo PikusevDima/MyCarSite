@@ -5,45 +5,45 @@ from CarsSite.models import Person
 
 
 def edit_user(request, id):
-    person = Person.id.get(id=id)
+    user = Person.objects.get(id=id)
     if request.method == "POST":
         form = UserName(request.POST)
         if form.is_valid():
-            name = form['product_name'].value()
-            person.name = name
+            name = form['person_name'].value()
+            user.name = name
             try:
-                person.save()
+                user.save()
                 return redirect("/")
             except Exception as e:
                 form = UserName(request.POST)
-                return render(request, "AddUser.html", {
+                return render(request, "Person_list.html", {
                     'form': form,
                     'error_message': "такое имя занято"
                 })
     else:
         form = UserName(initial={
-            "user_name": person.name
+            "person_name": user.name
         })
 
-        return render(request, "addUser.html", {'form': form})
+        return render(request, "AddUser.html", {'form': form})
 
 
 def user_list(request):
     out = Person.objects.all()
-    person = []
+    users = []
 
     for person in out:
-        person.append((
+        users.append((
             person.id,
             person.name
         ))
 
-    return render(request, "Person_List.html", {'users': person})
+    return render(request, "Person_List.html", {'users': users})
 
 
 def delete_person(request, id):
-    product = Person.id.get(id=id)
-    product.delete()
+    user = Person.objects.get(id=id)
+    user.delete()
     return redirect("/")
 
 
@@ -52,16 +52,16 @@ def add_user(request):
         try:
             form = UserName(request.POST)
             if form.is_valid():
-                name = form['product_name'].value()
-                Person = Person(name=name)
-                Person.save()
+                name = form['person_name'].value()
+                user = Person(name=name)
+                user.save()
                 return redirect("/")
         except Exception as e:
             form = UserName(request.POST)
             return render(request, "AddUser.html", {
                 'form': form,
-                'error_message': "такое имя занято"
+                'error_message': 'такое имя занято'
             })
     else:
         form = UserName()
-        return render(request, "AddUser.html", {'form': form})
+        return render(request, "Person_list.html", {'form': form})
