@@ -2,18 +2,22 @@
 
 {% block content %}
     <ul class="list-group">
-        {% for id, brand, users in car %}
-        <li class="list-group-item d-flex justify-content-between">
-            <span><b>{{ id }}</b>. Марка {{ brand. }}</span>
-            <span><b>Имя пользователя:</b> {{ users.name }}</span>
-            <ul class="list-group">
-                {% for id, name in users %}
-                <li class="list-group-item d-flex justify-content-between">
-                    <span><b>{{ id }}</b>.  {{ name }}</span>
-                </li>
-                {% endfor %}
-            </ul>
-        </li>
+        {% for id, brand, users, image, cost, speed, name  in car %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{ image }}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{ name }}</h5>
+            <p class="card-text">
+                Скорость: {{ speed }}
+                Марка: {{ brand }}
+                Цена: {{ cost }}
+
+
+                Автор: {{ users }}
+
+            </p>
+            </div>
+        </div>
         {% endfor %}
     </ul>
 {% endblock content %}

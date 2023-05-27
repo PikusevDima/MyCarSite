@@ -32,16 +32,16 @@ def user_list(request):
     out = Person.objects.all()
     users = []
 
-    for person in out:
+    for user in out:
         users.append((
-            person.id,
-            person.name
+            user.id,
+            user.name
         ))
 
     return render(request, "Person_List.html", {'users': users})
 
 
-def delete_person(request, id):
+def delete_user(request, id):
     user = Person.objects.get(id=id)
     user.delete()
     return redirect("/")

@@ -25,13 +25,17 @@ class Brand(models.Model):
 class Car(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(null=False)
-    cost = models.TextField(null=False)
-    speed = models.TextField(null=False)
+    cost = models.CharField(max_length=12,
+                            null=False)
+    speed = models.CharField(max_length=4,
+                             null=False)
     brand_id = models.ForeignKey(Brand,
-                              null=True,
-                              on_delete=models.SET_NULL)
+                                 null=True,
+                                 on_delete=models.SET_NULL)
     users = models.ManyToManyField(Person, symmetrical=True)
-    image = models.TextField(null=False)
+    image = models.CharField(max_length=401,
+                             null=False,
+                             unique=True)
 
     def __str__(self):
         return self.name

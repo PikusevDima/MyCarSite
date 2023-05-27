@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from CarsSite.forms import BrandName, CarManufacturerName
+from CarsSite.forms import BrandName
 from CarsSite.models import Brand
 
 
@@ -8,11 +8,11 @@ def add_brand(request):
         try:
             form = BrandName(request.POST)
             if form.is_valid():
-                name = form['brand_name'].value()
-                brand = Brand(name=name)
+                brand_name = form['brand_name'].value()
+                carManufacturerName = form['carManufacturer_Name'].value()
+                brand = Brand(name=brand_name, carManufacturer=carManufacturerName)
                 brand.save()
                 return redirect("/")
-            form = BrandName(request.POST)
         except Exception as e:
             form = BrandName(request.POST)
             return render(request, "addBrand.html", {
